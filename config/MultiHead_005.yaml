@@ -6,9 +6,10 @@ globals:
   dataset_name: train_512x512
   use_amp: True
   val_fold: 0
-  debug: True
-  folds: [0]
+  debug: False
+  folds: [0, 1, 2, 3, 4]
   classes: 11
+  fold1: True
 
 
 dataset:
@@ -46,7 +47,7 @@ model:
 optimizer:
     name: Adam
     params:
-      lr: 1.0e-03
+      lr: 1.0e-04
 
 scheduler:
   name: CosineAnnealingWarmRestarts

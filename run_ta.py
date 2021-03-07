@@ -262,7 +262,8 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
     valid_loader = DataLoader(valid_dataset, **config['loader']['valid'])
 
     # model
-    model = MultiHeadModel(**config['model']['params'])
+    model = eval(config['model']['name'])(**config['model']['params'])
+    # model = MultiHeadModel(**config['model']['params'])
     model.to(device)
 
     # optimizer
@@ -334,7 +335,8 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
 
         # save model
         torch.save(model.state_dict(), f'models_trained/{config["globals"]["name"]}_epoch{epoch + 1}.pth')
-        #ToDo パラメータを逐次保存しもっともよいパラメータを呼び出すように変更する
+        # ToDo パラメータを逐次保存しもっともよいパラメータを呼び出すように変更する
+        # ToDo 保存したloss がオブジェクトになっているので改善する
 
         # early stopping
         if early_stop.step(valid_losses[-1]):
