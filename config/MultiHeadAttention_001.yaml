@@ -1,0 +1,60 @@
+globals:
+  seed: 107
+  device: cuda
+  max_epoch: 8
+  patience: 3
+  dataset_name: train_512x512
+  use_amp: True
+  val_fold: 0
+  debug: False
+  folds: [0, 1, 2, 3, 4]
+  classes: 11
+  fold1: True
+
+
+dataset:
+  name: LabeledImageDatasetNumpy
+  train:
+    transform_list:
+      - [HorizontalFlip, {p: 0.5}]
+      - [ShiftScaleRotate, {
+          p: 0.5, shift_limit: 0.2, scale_limit: 0.2,
+          rotate_limit: 20, border_mode: 0, value: 0, mask_value: 0}]
+      - [RandomResizedCrop, {height: 512, width: 512, scale: [0.9, 1.0]}]
+      - [Cutout, {max_h_size: 51, max_w_size: 51, num_holes: 5, p: 0.5}]
+      - [Normalize, {
+          always_apply: True, max_pixel_value: 255.0,
+          mean: [0.4887381077884414], std: [0.23064819430546407]}]
+      - [ToTensorV2, {always_apply: True}]
+  valid:
+    transform_list:
+      - [Normalize, {
+          always_apply: True, max_pixel_value: 255.0,
+          mean: [0.4887381077884414], std: [0.23064819430546407]}]
+      - [ToTensorV2, {always_apply: True}]
+
+loader:
+  train: {batch_size: 8, shuffle: True, num_workers: 2, pin_memory: True, drop_last: True}
+  valid: {batch_size: 16, shuffle: False, num_workers: 2, pin_memory: True, drop_last: False}
+
+model:
+  name: MultiHeadAttention
+  params:
+    out_dims_head: [3, 4, 3, 1]
+    pretrained: True
+
+optimizer:
+    name: Adam
+    params:
+      lr: 1.0e-04
+
+scheduler:
+  name: CosineAnnealingWarmRestarts
+  params:
+    T_0: 8
+    T_mult: 1
+
+loss: {name: BCEWithLogitsLoss, params: {}}
+
+early_stopping:
+  params: {mode: min, patience: 10}
