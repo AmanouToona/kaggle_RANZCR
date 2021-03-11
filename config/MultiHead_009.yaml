@@ -9,7 +9,7 @@ globals:
   debug: False
   folds: [0, 1, 2, 3, 4]
   classes: 11
-  fold1: True
+  fold1: False
 
 
 dataset:
