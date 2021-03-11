@@ -181,6 +181,8 @@ class MultiHeadAttention(nn.Module):
                 nn.Linear(in_features, out_dim))
             setattr(self, layer_name, layer)
 
+        _ = gc.collect()
+
     def forward(self, x):
         """"""
         h = self.backbone(x)
