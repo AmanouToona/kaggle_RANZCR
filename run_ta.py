@@ -344,7 +344,7 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
 
         _ = gc.collect()
 
-    torch.save(model.state_dict(), f'models_trained/{config["globals"]["name"]}_epoch{epoch + 1}.pth')
+    torch.save(model.state_dict(), f'models_trained/{config["globals"]["name"]}.pth')
 
     epochs = [i + 1 for i in range(len(train_losses))]
     eval_df = pd.DataFrame(index=epochs, columns=['train_eval', 'valid_eval'])
