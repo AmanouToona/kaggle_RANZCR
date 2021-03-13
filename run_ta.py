@@ -342,6 +342,8 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
         if early_stop.step(valid_losses[-1]):
             break
 
+        _ = gc.collect()
+
     epochs = [i + 1 for i in range(len(train_losses))]
     eval_df = pd.DataFrame(index=epochs, columns=['train_eval', 'valid_eval'])
     eval_df['train_eval'] = train_losses

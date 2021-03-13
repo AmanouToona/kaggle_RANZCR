@@ -210,7 +210,7 @@ class StMultiHeadModel(nn.Module):
 
 
 if __name__ == '__main__':
-    size = (3, 256, 256)
+    size = (3, 512, 512)
     size2 = (1, 3, 256, 256)
 
     # x = torch.rand(size2)
@@ -218,12 +218,12 @@ if __name__ == '__main__':
     # y = layer(x)
     # print(y.size())
 
-    # m = MultiHeadAttention(pretrained=True)
-    # m = MultiHeadModel(pretrained=True)
+    # m = MultiHeadAttention(pretrained=False, base_name='regnety_120')
+    m = MultiHeadModel(pretrained=False, base_name='regnety_120')
     # m = StMultiHeadModel(pretrained=True, base_name='regnety_032')
-    m = MultiHeadAttention( base_name='regnety_032')
+    # m = MultiHeadAttention(base_name='regnety_032')
     print(m)
-    device = torch.device('cpu')
+    device = torch.device('cuda')
     m = m.to(device)
     m = m.eval()
 

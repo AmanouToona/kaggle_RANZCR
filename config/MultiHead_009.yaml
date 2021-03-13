@@ -34,13 +34,13 @@ dataset:
       - [ToTensorV2, {always_apply: True}]
 
 loader:
-  train: {batch_size: 8, shuffle: True, num_workers: 2, pin_memory: True, drop_last: True}
-  valid: {batch_size: 16, shuffle: False, num_workers: 2, pin_memory: True, drop_last: False}
+  train: {batch_size: 8, shuffle: True, num_workers: 1, pin_memory: True, drop_last: True}
+  valid: {batch_size: 16, shuffle: False, num_workers: 1, pin_memory: True, drop_last: False}
 
 model:
   name: MultiHeadModel
   params:
-    base_name: regnety_032
+    base_name: regnety_160
     out_dims_head: [3, 4, 3, 1]
     pretrained: True
 
