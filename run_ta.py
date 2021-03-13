@@ -334,7 +334,7 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
             logger.info(f'valid loss: {valid_losses[-1]:.8f}')
 
         # save model
-        torch.save(model.state_dict(), f'models_trained/{config["globals"]["name"]}_epoch{epoch + 1}.pth')
+        # torch.save(model.state_dict(), f'models_trained/{config["globals"]["name"]}_epoch{epoch + 1}.pth')
         # ToDo パラメータを逐次保存しもっともよいパラメータを呼び出すように変更する
         # ToDo 保存したloss がオブジェクトになっているので改善する
 
@@ -343,6 +343,8 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
             break
 
         _ = gc.collect()
+
+    torch.save(model.state_dict(), f'models_trained/{config["globals"]["name"]}_epoch{epoch + 1}.pth')
 
     epochs = [i + 1 for i in range(len(train_losses))]
     eval_df = pd.DataFrame(index=epochs, columns=['train_eval', 'valid_eval'])
