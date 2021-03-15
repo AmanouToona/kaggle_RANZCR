@@ -303,10 +303,11 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
 
             y = model(images)
             loss = loss_func(y, labels)
-            running_loss += loss
 
             loss.backward()
             optimizer.step()
+            loss = loss.detach()
+            running_loss += loss
 
             del loss  # 計算グラフの削除によるメモリ節約
         train_losses.append(running_loss / len(train_loader))
@@ -325,7 +326,7 @@ def train_one_fold(config, train_all, temp_path, print_progress=False):
 
                 y = model(images)
 
-                loss = loss_func(y, labels)
+                loss = loss_func(y, labels).detach()
                 running_loss += loss
 
                 del loss
