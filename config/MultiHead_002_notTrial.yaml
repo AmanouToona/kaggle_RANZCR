@@ -4,7 +4,7 @@ globals:
   max_epoch: 32
   patience: 3
   dataset_name: train_512x512
-  use_amp: False
+  use_amp: True
   val_fold: 0
   debug: False
   folds: [0, 1, 2, 3, 4]
@@ -38,11 +38,11 @@ loader:
   valid: {batch_size: 16, shuffle: False, num_workers: 2, pin_memory: True, drop_last: False}
 
 model:
-  name: MultiHeadAttention
+  name: MultiHeadModel
   params:
+    base_name: regnety_032
     out_dims_head: [3, 4, 3, 1]
     pretrained: True
-    base_name: resnet50
 
 optimizer:
     name: Adam

@@ -190,7 +190,7 @@ class MultiHeadAttention(nn.Module):
             getattr(self, f"head_{i}")(h) for i in range(self.n_heads)]
         y = torch.cat(hs, axis=1)
 
-        return h
+        return y
 
 
 class StMultiHeadModel(nn.Module):
@@ -211,7 +211,7 @@ class StMultiHeadModel(nn.Module):
 
 if __name__ == '__main__':
     size = (3, 512, 512)
-    size2 = (1, 3, 256, 256)
+    # size2 = (1, 3, 256, 256)
 
     # x = torch.rand(size2)
     # layer = nn.Conv2d(3, 8, kernel_size=7)
@@ -219,17 +219,20 @@ if __name__ == '__main__':
     # print(y.size())
 
     # m = MultiHeadAttention(pretrained=False, base_name='regnety_120')
-    m = MultiHeadModel(pretrained=False, base_name='regnety_120')
+    # m = MultiHeadModel(pretrained=False, base_name='regnety_120')
     # m = StMultiHeadModel(pretrained=True, base_name='regnety_032')
-    # m = MultiHeadAttention(base_name='regnety_032')
+    m = MultiHeadAttention(base_name='regnety_032')
+    m = MultiHeadAttention(base_name='resnet200d')
+
     print(m)
     device = torch.device('cuda')
     m = m.to(device)
     m = m.eval()
 
-    summary(m, size)
+    # summary(m, size)
+    size = (1, 3, 512, 512)
 
-    x = torch.rand(size2)
+    x = torch.rand(size)
     x = x.to(device)
     with torch.no_grad():
         y = m(x)
